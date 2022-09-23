@@ -1,40 +1,64 @@
 from tkinter import *
 from sqlite3 import *
+from tkinter import messagebox
+from ej1 import *
 
 top = Tk()
 
 def populate_table(table,tuplas):
     query = "INSERT INTO " + table + " VALUES"
     for tupla in tuplas:
-        query += tupla
+        query += "('" + tupla[0] + "','" + tupla[1] + "','" + tupla[2] + "')"
         if tupla != tuplas[len(tuplas)-1]:
             query += ","
     return query
 
-def almacena():
+def almacenaBt():
+    almacena("https://sevilla.abc.es/rss/feeds/Sevilla_Sevilla.xml")
+
+def almacena(url):
     con = connect("ejtkinter.db")
     cur = con.cursor()
     cur.execute("DROP TABLE news")
     cur.execute("CREATE TABLE news(title, link, date)")
     res = cur.execute("SELECT name FROM sqlite_master WHERE name='news'")
     if res.fetchone() is not None:
-        print("BD creada correctamente")
+        messagebox.showinfo("Successful Creation","BD creada correctamente")
+    abrir_url(url, "./noticias_almacenadas")
+    lista_tuplas = tratar_archivo("./noticias_almacenadas")
     query = populate_table("news",lista_tuplas)
+    print(query)
     cur.execute(query)
     con.commit()
     
-def lista(selectquery):
-    newtab = Toplevel()
-    text = Text(newtab)
 
+def listaBt():
+    lista("SELECT * FROM news")
+
+def lista(selectquery):
     con = connect("ejtkinter.db")
     cur = con.cursor()
-    noticias = cur.execute(selectquery)
+    newtab = Toplevel()
+    sc = Scrollbar(newtab)
+    sc.pack(side = RIGHT, fill = Y)
+    lb = Listbox(newtab, width = 200, yscrollcommand=sc.set)
+    for row in cur.execute(selectquery):
+        lb.insert(END, row[0])
+        lb.insert(END, row[1])
+        lb.insert(END, row[2])
+        lb.insert(END, '')
+    lb.pack(side = LEFT, fill = BOTH) #Fill lo que hace es que lb se adapte al tamaño de la ventana(fillea la ventana) :)
+    sc.config(command = lb.yview)
     
-    text.insert(INSERT,noticias)
-    
+
+    #Si pongo aquí un print(noticias.fetchall()) no lo guarda en var luego. Por qué? El fetch solo funca una vez??
+'''    var = StringVar()
+    var = noticias.fetchall()
     con.commit()
 
+    text.insert(INSERT,var)
+    text.pack()
+'''
 
 def lista_por_mes():
     month = StringVar()
@@ -47,8 +71,8 @@ def lista_por_mes():
 
 
 
-b1 =  Button ( top, text = "Almacenar", relief = RAISED, command = almacena)
-b2 =  Button ( top, text = "Listar", relief = RAISED, command = lista)
+b1 =  Button ( top, text = "Almacenar", relief = RAISED, command = almacenaBt)
+b2 =  Button ( top, text = "Listar", relief = RAISED, command = listaBt)
 b3 =  Button ( top, text = "Busca Mes", relief = RAISED, command = lista_por_mes)
 b4 =  Button ( top, text = "Busca Dia", relief = RAISED )
 b1.grid(row = 0, column = 0)
