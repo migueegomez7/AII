@@ -19,21 +19,23 @@ def almacenaBt():
 def almacena(url):
     con = connect("ejtkinter.db")
     cur = con.cursor()
-    cur.execute("DROP TABLE news")
+    cur.execute("DROP TABLE IF EXISTS news")
+    cur.execute("DROP TABLE IF EXISTS test")
     cur.execute("CREATE TABLE news(title, link, date)")
+    cur.execute("CREATE TABLE test(title TEXT NOT NULL, link TEXT NOT NULL, date DATE NOT NULL)")
     res = cur.execute("SELECT name FROM sqlite_master WHERE name='news'")
     if res.fetchone() is not None:
         messagebox.showinfo("Successful Creation","BD creada correctamente")
     abrir_url(url, "./noticias_almacenadas")
     lista_tuplas = tratar_archivo("./noticias_almacenadas")
-    query = populate_table("news",lista_tuplas)
+    query = populate_table("test",lista_tuplas)
     print(query)
     cur.execute(query)
     con.commit()
     
 
 def listaBt():
-    lista("SELECT * FROM news")
+    lista("SELECT * FROM test")
 
 def lista(selectquery):
     con = connect("ejtkinter.db")

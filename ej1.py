@@ -19,7 +19,7 @@ def tratar_archivo(archivo):
     
     for i in range(0, len(l1)):
         tupla = l1[i]
-        l1[i] = tupla[0], tupla[1], formatea_fecha(l2[i])
+        l1[i] = tupla[0], tupla[1], l2[i]
     return l1
 
 def formatea_fecha(fecha):
