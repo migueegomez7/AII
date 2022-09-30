@@ -32,9 +32,14 @@ def almacenar():
 def listar():
     return "a"
 
+def printea(l):
+    for i in range(len(l)):
+        print("------------- 1 ------- ")
+        print("")
+        print(l[i])
 
-
-
+def populate(l):
+    return "a"
 
 def ventana_principal():
     top = Tk()
@@ -43,7 +48,8 @@ def ventana_principal():
     b2 =  Button ( top, text = "Listar", relief = RAISED, command = listar)
     b1.pack(side = TOP)
     b2.pack(side = TOP)
-    extraer_jornadas()
+    l = extraer_jornadas()
+    printea(l)
     top.mainloop()
 
 if __name__ == "__main__":
