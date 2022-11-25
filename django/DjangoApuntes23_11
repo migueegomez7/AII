@@ -1,0 +1,73 @@
+AII 
+Clase 23/11
+
+Notas Django
+
+Formularios:
+Si queremos importar un formulario desde un modelo importamos ModelForm
+Si lo hacemos desde el principio importamos Form
+
+Django tiene funciones validadoras de campos
+
+
+Para sacar datos de un formulario una forma es cleaned_data["atributo"] : 
+descripcion = formulario.cleaned_data["descripcion"]
+
+
+Para crear un formulario a partir de un modelo se usa Model Form:
+
+class RecetaForm(ModelForm):
+	class Meta:
+		model = Receta
+
+class ComentarioForm(ModelForm):
+	class Meta:
+		model = Comentario
+		
+
+
+Si en el formulario hay imágenes hay que incluir, request.FILES
+
+
+
+------------------------El profesor termina de hablar sobre formularios-----------------
+
+
+=========================Archivos estáticos==================================================0
+
+Para incluir archivos estáticos en el proyecto hay que incluir en el settings.py:
+
+STATICFILES_DIRS = (os.path.join(RUTA_PROYECTO, 'static') ##Usar rutas relativas
+
+En este directorio estático podemos incluir css, bootstrap, imágenes, javascript, etc
+
+La carpeta static tiene que estar a la misma altura de directorio que el proyecto y no dentro de él.
+
+Para usar variables definidas en el settings hay que importar el settings
+
+En la plantilla base html cargar el static arriba con  {% load static %}
+
+
+
+===============================================9 days ago===============================================
+
+--------------------------------------------Autenticación de usuarios-----------------------------------------
+
+Autenticacion de usuarios, acceso restringido, cierre de sesion
+
+
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth import login, authenticate, logout
+from django.contrib.auth.decorators import login_requireds
+
+
+def ingresar(request):
+	if not request.user.is_anonymous():   ##Esto comprueba si el usuario está logueado o no 
+	
+	
+	
+Con el método bulk_create() podemos meter a una tabla de una base de datos todos los obetos del tirón y es más rápido que ir metiéndolos 1 a 1
+
+Para que no pete al recorrer un for , usar {% if vinos %}
+
