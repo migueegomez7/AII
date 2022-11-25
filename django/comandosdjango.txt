@@ -1,0 +1,14 @@
+./manage.py syncdb
+
+python3 ./manage.py runserver
+
+python3 ./manage.py createsuperuser
+
+python3 ./manage.py migrate
+
+
+django-admin startproject nombreproyecto
+
+django-admin startapp nombreapp
+
+En el archivo settings.py hay que incluir: nombreapp.apps.NombreappConfig
