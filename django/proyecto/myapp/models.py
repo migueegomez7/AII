@@ -17,7 +17,7 @@ class Film(models.Model):
     idFilm = models.IntegerField(primary_key=True)
     titulo = models.CharField(max_length=60)
     director = models.CharField(max_length=60)
-    sinopsis = models.TextField()
+    #sinopsis = models.TextField()
     fecha_estreno = models.DateField()
     pais = models.CharField(max_length=20)
     ##genero = models.CharField()
