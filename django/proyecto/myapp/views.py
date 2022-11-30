@@ -11,6 +11,6 @@ def index(request):
     return render(request, 'index.html')
 
 def populateDatabase(request):
-    (b) = populateDB.populate()
-    informacion="Datos cargados correctamente\n" + "Juegos de mesa: " + str(b)
+    (b,f) = populateDB.populate()
+    informacion="Datos cargados correctamente\n" + "Juegos de mesa: " + str(b) + "\n Peliculas: " + str(f)
     return render(request, 'carga.html', {'inf':informacion})

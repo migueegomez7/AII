@@ -12,15 +12,19 @@ def populate_boardgames():
     lista = []
     lista = extract_boardgames()
     i = 1
-    return len(lista)
-'''    for line in lista:
+    for line in lista:
+        print(line)
         title = line[0]
-        price = line[1]
+        price = float(line[1])
         complexity = line[3]
-        lista.append(BoardGame(idBoardGame = i,titulo = title, precio = float(price), complejidad = complexity))
+        print(complexity)
+        boardgame = BoardGame(idBoardGame = i, titulo = title, precio = price, complejidad = complexity)
+        #lista.append(BoardGame(idBoardGame = i,titulo = title, precio = price, complejidad = complexity))
+        lista.append(boardgame)
         i += 1
-        BoardGame.objects.bulk_create(lista)
-'''    
+    BoardGame.objects.bulk_create(lista)
+    return len(lista)
+    
 
 def populate_films():
     Film.objects.all().delete()
@@ -48,4 +52,5 @@ def populatePais():
 
 def populate():
     b = populate_boardgames()
-    
+    f = populate_films()
+    return (b,f)

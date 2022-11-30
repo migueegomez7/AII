@@ -27,18 +27,6 @@ def is_dt_pais(dtlist):
             return dt
 
 def almacenar_bd():
-
-    conn = sqlite3.connect('peliculas.db')
-    conn.text_factory = str
-    conn.execute("DROP TABLE IF EXISTS PELICULA")
-    conn.execute('''CREATE TABLE PELICULA
-       (TITULO            TEXT NOT NULL,
-        TITULO_ORIGINAL    TEXT        ,
-        PAIS      TEXT,
-        FECHA            DATE,          
-        DIRECTOR         TEXT,
-        GENEROS        TEXT);''')
-
     
     f = urllib.request.urlopen("https://www.elseptimoarte.net/estrenos/")
     s = BeautifulSoup(f, "lxml")
@@ -48,22 +36,12 @@ def almacenar_bd():
         s = BeautifulSoup(f, "lxml")
         datos = s.find("main", class_="informativo").find("section",class_="highlight").div.dl
         titulo = datos.find("dd").string.strip()
-        pais = datos.find_all("dt")[2].find_next_sibling("dd").a.string.strip()
-        fecha = datetime.strptime(datos.find("dt",string="Estreno en EspaÃ±a").find_next_sibling("dd").string.strip(), '%d/%m/%Y')
-        
         generos_director = s.find("div",id="datos_pelicula")
-        generos = "".join(generos_director.find("p",class_="categorias").stripped_strings)
         director = "".join(generos_director.find("p",class_="director").stripped_strings)        
-
-        conn.execute("""INSERT INTO PELICULA (TITULO, TITULO_ORIGINAL, PAIS, FECHA, DIRECTOR, GENEROS) VALUES (?,?,?,?,?,?)""",
-                     (titulo,titulo_original,pais,fecha,director,generos))
-        conn.commit()
-
-    cursor = conn.execute("SELECT COUNT(*) FROM PELICULA")
-    messagebox.showinfo("Base Datos",
-                        "Base de datos creada correctamente \nHay " + str(cursor.fetchone()[0]) + " registros")
-    conn.close()
-
+        fecha = datetime.strptime(datos.find_all("dd")[3].string.strip(), '%d/%m/%Y')
+        pais = datos.find_all("dt")[2].find_next_sibling("dd").a.string.strip()
+        generos = "".join(generos_director.find("p",class_="categorias").stripped_strings)
+        sinopsis = s.find("div",class_="info").string.strip()
 
 def buscar_por_titulo():  
     def listar(event):

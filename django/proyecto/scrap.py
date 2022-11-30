@@ -4,7 +4,7 @@ import urllib.request
 import re
 import os
 import django
-
+from datetime import datetime
 
 BOARDGAME_PAGES = 1
 
@@ -53,6 +53,24 @@ def extract_boardgames():
     print("Extraídos {numero} juegos".format(numero=len(l)))
     return l 
 
-def extract_films():
-    pass
-
+def extract_films():    
+    l = []
+    f = urllib.request.urlopen("https://www.elseptimoarte.net/estrenos/")
+    s = BeautifulSoup(f, "lxml")
+    lista_link_peliculas = s.find("ul", class_="elements").find_all("li")
+    for link_pelicula in lista_link_peliculas:
+        f = urllib.request.urlopen("https://www.elseptimoarte.net/"+link_pelicula.a['href'])
+        s = BeautifulSoup(f, "lxml")
+        datos = s.find("main", class_="informativo").find("section",class_="highlight").div.dl
+        titulo = datos.find("dd").string.strip()
+        print("Leyendo pelicula: ", titulo)
+        generos_director = s.find("div",id="datos_pelicula")
+        director = "".join(generos_director.find("p",class_="director").stripped_strings)        
+        #sinopsis = s.find("div",class_="info").string.strip()  LA SINOPSIS A VECES CONTIENE UN p por la cara o un <em> xd
+        fecha = datetime.strptime(datos.find_all("dd")[3].string.strip(), '%d/%m/%Y')
+        pais = datos.find_all("dt")[2].find_next_sibling("dd").a.string.strip()
+        generos = "".join(generos_director.find("p",class_="categorias").stripped_strings)
+        ##print((titulo, director, fecha, pais, generos, sinopsis))
+        l.append((titulo,director,fecha,pais,generos))
+    print("Extraídas {numero} películas.".format(numero=len(l)))
+    return l
