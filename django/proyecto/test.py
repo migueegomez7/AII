@@ -7,6 +7,7 @@ from tkinter import messagebox
 import sqlite3
 import lxml
 from datetime import datetime
+import re
 # lineas para evitar error SSL
 import os, ssl
 if (not os.environ.get('PYTHONHTTPSVERIFY', '') and
@@ -19,6 +20,11 @@ def cargar():
     respuesta = messagebox.askyesno(title="Confirmar",message="Esta seguro que quiere recargar los datos. \nEsta operaciÃ³n puede ser lenta")
     if respuesta:
         almacenar_bd()
+
+def is_dt_pais(dtlist):
+    for dt in dtlist:
+        if dt.string.strip() == re.compile("^Pa"):
+            return dt
 
 def almacenar_bd():
 
@@ -41,13 +47,8 @@ def almacenar_bd():
         f = urllib.request.urlopen("https://www.elseptimoarte.net/"+link_pelicula.a['href'])
         s = BeautifulSoup(f, "lxml")
         datos = s.find("main", class_="informativo").find("section",class_="highlight").div.dl
-        titulo_original = datos.find("dt",string="TÃ­tulo original").find_next_sibling("dd").string.strip()
-        #si no tiene tÃ­tulo se pone el tÃ­tulo original
-        if (datos.find("dt",string="TÃ­tulo")):
-            titulo = datos.find("dt",string="TÃ­tulo").find_next_sibling("dd").string.strip()
-        else:
-            titulo = titulo_original      
-        pais = "".join(datos.find("dt",string="PaÃ­s").find_next_sibling("dd").stripped_strings)
+        titulo = datos.find("dd").string.strip()
+        pais = datos.find_all("dt")[2].find_next_sibling("dd").a.string.strip()
         fecha = datetime.strptime(datos.find("dt",string="Estreno en EspaÃ±a").find_next_sibling("dd").string.strip(), '%d/%m/%Y')
         
         generos_director = s.find("div",id="datos_pelicula")
