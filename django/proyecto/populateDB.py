@@ -22,7 +22,6 @@ def populate_boardgames():
         #boardgame.save()
         print("----------------")
         print(boardgame)
-        #lista.append(BoardGame(idBoardGame = i,titulo = title, precio = price, complejidad = complexity))
         res.append(boardgame)
         i += 1
     BoardGame.objects.bulk_create(res)
@@ -36,7 +35,7 @@ def populate_films():
     j = 1
     for line in lista:
         film = Film(idFilm = j, titulo = line[0],director = line[1],fecha_estreno = line[2],pais = line[3])
-        film.save()
+        #film.save()
         print("-----------")
         print(film)
         res.append(film)
@@ -44,20 +43,7 @@ def populate_films():
     Film.objects.bulk_create(res)
     return len(res)
 
-'''
-def populatePais():
-    Pais.objects.all().delete()
-    
-    lista=[]
-    fileobj=open(path+"\\paises", "r")
-    for line in fileobj.readlines():
-        rip = str(line.strip()).split('|')
-        lista.append(Pais(idPais=int(rip[0].strip()), nombre=str(rip[1].strip())))
-    fileobj.close()
-    Pais.objects.bulk_create(lista)  # bulk_create hace la carga masiva para acelerar el proceso
-    
-    return len(lista)
-'''
+
 
 
 def populate():
