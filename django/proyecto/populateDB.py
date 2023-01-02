@@ -18,7 +18,9 @@ def populate_boardgames():
         price = float(line[1])
         complexity = line[3]
         print(complexity)
-        boardgame = BoardGame(idBoardGame = i, titulo = title, precio = price, complejidad = complexity)
+        description = line[6]
+        print(description)
+        boardgame = BoardGame(idBoardGame = i, titulo = title, precio = price, complejidad = complexity, descripcion = description)
         #boardgame.save()
         print("----------------")
         print(boardgame)
@@ -34,7 +36,7 @@ def populate_films():
     lista = extract_films()
     j = 1
     for line in lista:
-        film = Film(idFilm = j, titulo = line[0],director = line[1],fecha_estreno = line[2],pais = line[3])
+        film = Film(idFilm = j, titulo = line[0],director = line[1],fecha_estreno = line[2],pais = line[3], genero = line[4], sinopsis = line[5])
         #film.save()
         print("-----------")
         print(film)

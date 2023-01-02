@@ -8,9 +8,15 @@ def say_hello(request):
 
 
 def index(request):
-    return render(request, 'index.html')
+    peliculas_almacenadas = Film.objects.all()
+    modelmap = {'peliculas': peliculas_almacenadas}
+    return render(request, 'index.html', modelmap)
 
 def populateDatabase(request):
     (b,f) = populateDB.populate()
     informacion="Datos cargados correctamente\n" + "Juegos de mesa: " + str(b) + "\n Peliculas: " + str(f)
     return render(request, 'carga.html', {'inf':informacion})
+
+def seleccion(request):
+    checkbox_values = request.POST.getlist("checks")
+    print(checkbox_values)

@@ -7,7 +7,7 @@ class BoardGame(models.Model):
     precio = models.FloatField()
     ##tematica = models.CharField()
     complejidad = models.CharField(max_length=10)
-    ##descripcion = models.TextField()
+    descripcion = models.TextField(default="")
     
 
 
@@ -17,7 +17,7 @@ class Film(models.Model):
     idFilm = models.IntegerField(primary_key=True)
     titulo = models.CharField(max_length=60)
     director = models.CharField(max_length=60)
-    #sinopsis = models.TextField()
     fecha_estreno = models.DateField()
     pais = models.CharField(max_length=20)
-    ##genero = models.CharField()
+    genero = models.CharField(max_length=50, default="Sin genero")
+    sinopsis = models.TextField(default="null")

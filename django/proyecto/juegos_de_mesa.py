@@ -44,18 +44,19 @@ def commandCargar():
             tematica = bsJuego.find("div", class_="col label", string="Temática").find_next_sibling("div").string
         else:
             tematica = "Desconocido"
+        descripcion = bsJuego.find("div",class_="description").get_text()
         
-        l.append((titulo, votos_positivos, precio, tematica, complejidad))
+        l.append((titulo, votos_positivos, precio, tematica, complejidad,descripcion))
     
     con = connect('juegos.db')
     con.text_factory = str
     cur = con.cursor()
     cur.execute('DROP TABLE IF EXISTS Juegos')
-    cur.execute('CREATE TABLE Juegos(ID INTEGER PRIMARY KEY AUTOINCREMENT, TITULO TEXT, VOTOS_POSITIVOS INT, PRECIO FLOAT, TEMATICA TEXT, COMPLEJIDAD TEXT)')
+    cur.execute('CREATE TABLE Juegos(ID INTEGER PRIMARY KEY AUTOINCREMENT, TITULO TEXT, VOTOS_POSITIVOS INT, PRECIO FLOAT, TEMATICA TEXT, COMPLEJIDAD TEXT, DESCRIPCION TEXT)')
     
     for juego in l:
-        print("INSERT INTO Juegos(TITULO, VOTOS_POSITIVOS, PRECIO, TEMATICA, COMPLEJIDAD) VALUES ('{0}',{1},{2},'{3}','{4}')".format(juego[0],str(juego[1]).replace("%","").strip(),juego[2].replace(',','.').replace('€','').strip(), juego[3], juego[4]))
-        cur.execute("INSERT INTO Juegos(TITULO, VOTOS_POSITIVOS, PRECIO, TEMATICA, COMPLEJIDAD) VALUES ('{0}',{1},{2},'{3}','{4}')".format(juego[0],str(juego[1]).replace("%","").strip(),juego[2].replace(',','.').replace('€','').strip(), juego[3], juego[4]))
+        print("INSERT INTO Juegos(TITULO, VOTOS_POSITIVOS, PRECIO, TEMATICA, COMPLEJIDAD, DESCRIPCION) VALUES ('{0}',{1},{2},'{3}','{4}','{5}')".format(juego[0],str(juego[1]).replace("%","").strip(),juego[2].replace(',','.').replace('€','').strip(), juego[3], juego[4], juego[5]))
+        cur.execute("INSERT INTO Juegos(TITULO, VOTOS_POSITIVOS, PRECIO, TEMATICA, COMPLEJIDAD, DESCRIPCION) VALUES ('{0}',{1},{2},'{3}','{4}','{5}')".format(juego[0],str(juego[1]).replace("%","").strip(),juego[2].replace(',','.').replace('€','').strip(), juego[3], juego[4], juego[5]))
     res = cur.execute("SELECT name FROM sqlite_master WHERE name='Juegos'")
     if res.fetchone() is not None:
         messagebox.showinfo("Successful Creation","Almacenados " + str(cur.execute("SELECT COUNT(*) FROM Juegos").fetchone()[0]) + " juegos")

@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
 
 <head>
@@ -7,7 +8,22 @@
 <body>
 
     <h1>Inicio</h1>
-    <p>Hola! Introduce 5 películas de la lista que te gusten y el sistema te recomendará unos cuantos juegos de mesa</p>
+    <p>Hola! Seleccione 5 películas de la lista que te gusten y el sistema te recomendará unos cuantos juegos de mesa</p>
+    <a href="carga/">Carga base de datos</a>
+
+    <form action="seleccion/" method="POST">
+        {% csrf_token %}
+        <label for="peliculas">Seleccione 5 películas:</label>
+            <br>
+            {% for p in peliculas %}
+            <input type="checkbox" id="{{p.idFilm}}" value="{{p.idFilm}}" name="checks">
+            <label for="{{p.idFilm}}">{{p.titulo}}</label>
+            <br>
+            {% endfor %}
+        <br>
+        <br>
+        <input class="btn btn-default" type="submit" value="OK">
+      </form>
 
 </body>
 </html>
