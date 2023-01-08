@@ -3,13 +3,10 @@ from django.db import models
 class BoardGame(models.Model):
     idBoardGame = models.IntegerField(primary_key=True)
     titulo = models.CharField(max_length=60)
-    ##votos_positivos = models.IntegerField()
     precio = models.FloatField()
-    ##tematica = models.CharField()
     complejidad = models.CharField(max_length=10)
     descripcion = models.TextField(default="")
     
-
 
 
 

@@ -51,4 +51,4 @@ def populate_films():
 def populate():
     b = populate_boardgames()
     f = populate_films()
-    return (b,f)
+    return (f,b)

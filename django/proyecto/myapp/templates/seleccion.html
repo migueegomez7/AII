@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seleccion de películas y juegos de mesa</title>
+</head>
+<body>
+    <a href="../">Inicio</a>
+
+    <p style="font-weight: bold; font-size: 26px" class="m-2">Peliculas recomendadas</p>
+    {% for film in films %}
+    <p class="m-3">{{film.title}}</p>
+    <p class="m-3">{{film.sinopsis}}</p>
+    <br>
+    {% endfor %}
+
+    <p style="font-weight: bold; font-size: 26px" class="m-2">Juegos de mesa recomendados</p>
+    {% for boardgame in boardgames %}
+        <p class="m-3">{{boardgame.title}}</p>
+        <p class="m-3">{{boardgame.description}}</p>
+        <br>
+    {% endfor %}
+</body>
+</html>

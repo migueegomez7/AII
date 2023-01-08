@@ -2,28 +2,35 @@
 <html>
 
 <head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <title>Inicio</title>
 </head>
 
 <body>
 
-    <h1>Inicio</h1>
-    <p>Hola! Seleccione 5 películas de la lista que te gusten y el sistema te recomendará unos cuantos juegos de mesa</p>
-    <a href="carga/">Carga base de datos</a>
+<blockquote>
+    <h3 class="text-center">¿No sabes qué hacer hoy?</h3>
+    <h3 class="text-center">Déjanos un tema y te mostraremos películas y juegos de mesa para que te entretengas esta tarde.</p>
+</blockquote>
 
-    <form action="seleccion/" method="POST">
+<div class="d-flex justify-content-center">
+    <form action="seleccion/" method="POST" class="">
         {% csrf_token %}
-        <label for="peliculas">Seleccione 5 películas:</label>
-            <br>
-            {% for p in peliculas %}
-            <input type="checkbox" id="{{p.idFilm}}" value="{{p.idFilm}}" name="checks">
-            <label for="{{p.idFilm}}">{{p.titulo}}</label>
-            <br>
-            {% endfor %}
+        <br>
+        <label for="tema">Introduce un tema que te guste:</label>
+        <br>
+        <input type="text" id="tema" name="tema" placeholder="animales, coches, fantasía..">
         <br>
         <br>
-        <input class="btn btn-default" type="submit" value="OK">
-      </form>
+        <br>
+        <input class="btn btn-primary" type="submit" value="OK">
+    </form>
+</div>
 
+<div class="fixed-bottom">
+    <p>¡Atención! El tiempo de carga puede ser muy elevado. (15 minutos en el host del desarrollador)</p>
+    <a href="carga/">Carga base de datos</a>
+    <a href="indice/">Carga el índice</a>
+</div>
 </body>
 </html>

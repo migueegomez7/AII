@@ -1,0 +1,15 @@
+Clase de AII , SISTEMAS DE RECOMENDACIÓN
+
+Hay que determinar un número de vecinos concreto. 
+
+Supongamos que queremos recomendarle un Item 5 a Alice.
+
+Para ello , vemos los k vecinos más parecidos a Alice.
+
+Cada vecino ki, tendrá un coeficiente de parecido a Alice basado en las puntuaciones que ki ha dado a diferentes items que Alice también ha puntuado. Si sus puntuaciones son parecidas, se parecerán más.
+
+Sabiendo esto, tiene sentido que la puntuación del vecino ki al item i deberá contar más que la del vecino que menos se parece a Alice.
+
+Tiene sentido también darle más peso a items con una varianza alta(con puntuaciones muy diferentes entre los usuarios) a items con una varianza pequeña(con puntuaciones parecidas entre los usuarios).
+
+Cuando se tienen millones de productos y millones de usuarios como Amazon , es mejor usar un SR basado en modelo y no en Contenido.
